@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTS Army Dream Tickets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Bangers&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for a clean, BTS-inspired color scheme */
+        :root {
+            --bts-purple: #5A1E8C;
+            --bts-dark-purple: #2c0f4f;
+            --bts-light-purple: #966FD6;
+            --bts-accent: #FFD700;
+            --card-bg: #fff;
+            --text-color: #333;
+            --scratch-bg: #5a1e8c; /* Dark purple for the scratch cover */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bts-dark-purple); /* Dark purple background */
+            background-image: linear-gradient(135deg, var(--bts-dark-purple) 0%, var(--bts-purple) 100%);
+            color: var(--text-color);
+            display: block; /* Allows content to flow and be scrollable */
+            padding: 20px;
+            margin: 0;
+            position: relative;
+        }
+
+        /* BTS logo animation remains for a cool effect */
+        .bts-logo {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg);
+            opacity: 0.1;
+            font-size: 5em;
+            color: var(--bts-accent);
+            animation: rotateLogo 20s infinite linear;
+            z-index: 0;
+            user-select: none;
+        }
+
+        @keyframes rotateLogo {
+            from {
+                transform: translateX(-50%) rotate(0deg);
+            }
+            to {
+                transform: translateX(-50%) rotate(360deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centers cards horizontally */
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            transition: all 0.5s ease;
+            margin: 20px auto; /* Adds spacing between cards and centers them */
+        }
+        
+        @media (max-width: 600px) {
+            .card {
+                padding: 20px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        h1 {
+            color: var(--bts-purple);
+            margin-bottom: 10px;
+            font-family: 'Bangers', sans-serif;
+            font-size: 3em;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px var(--bts-light-purple);
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        /* Left-aligned form elements */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left; /* Aligns content inside the group to the left */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: var(--bts-purple);
+            outline: none;
+            box-shadow: 0 0 8px rgba(90, 30, 140, 0.2);
+        }
+
+        .button {
+            background: linear-gradient(135deg, var(--bts-purple), var(--bts-light-purple));
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* BTS-themed Scratch Card styles */
+        .scratch-card-container {
+            position: relative;
+            background: linear-gradient(135deg, var(--bts-light-purple), var(--bts-purple)); /* BTS purple gradient */
+            border-radius: 15px;
+            width: 350px;
+            height: 250px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #scratchCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .scratch-text {
+            color: #fff;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: 600;
+            text-shadow: 1px 1px var(--bts-accent);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .scratch-text h2 {
+            font-size: 2.2em;
+            margin: 0;
+            color: var(--bts-accent);
+            text-transform: uppercase;
+            font-family: 'Bangers', sans-serif;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px #000;
+        }
+
+        .scratch-text p {
+            font-size: 1.2em;
+            margin: 10px 0 0;
+        }
+        
+        /* Styles for the final message */
+        .final-message-content h1 {
+            color: var(--bts-purple);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .final-message-content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .final-message-content .developer-info {
+            margin-top: 20px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .fireworks-image {
+            width: 60px;
+            height: 60px;
+            margin-top: 10px;
+            animation: tada 0.8s infinite;
+        }
+        
+        @keyframes tada {
+            from {
+                transform: scale3d(1, 1, 1);
+            }
+            10%, 20% {
+                transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+            }
+            30%, 50%, 70%, 90% {
+                transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+            }
+            40%, 60%, 80% {
+                transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+            }
+            to {
+                transform: scale3d(1, 1, 1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bts-logo">A.R.M.Y</div>
+    <div class="container">
+        <div id="signup-card" class="card">
+            <h1>Free Free Free!!!</h1>
+            <p class="subtitle">Enter your details for a chance to win a BTS concert ticket!</p>
+
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Choose a username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="middleName">Middle Name (optional)</label>
+                    <input type="text" id="middleName" name="middleName" placeholder="Enter your middle name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="text" id="mobile" name="mobile" placeholder="Enter your mobile number" required pattern="[0-9]{10,}" title="Please enter a valid mobile number (10 digits or more)">
+                </div>
+
+                <button type="submit" class="button">Sign Up & Get Your Scratch Card!</button>
+            </form>
+        </div>
+
+        <div id="scratch-card-wrapper" class="card hidden">
+            <h1 style="color: var(--bts-purple);">Scratch to Win!</h1>
+            <p class="subtitle">Use your mouse or finger to reveal your prize!</p>
+            <div class="scratch-card-container">
+                <div class="scratch-text">
+                    <h2>CONGRATULATIONS!</h2>
+                    <p id="winningMessage">You won an exclusive ticket to the BTS concert!</p>
+                </div>
+                <canvas id="scratchCanvas"></canvas>
+            </div>
+            <button id="continue-button" class="button hidden" style="margin-top: 30px;">Continue</button>
+        </div>
+        
+        <div id="final-message-card" class="card hidden">
+            <div class="final-message-content">
+                <img src="https://em-content.zobj.net/source/microsoft-teams/337/sparkler_1f387.png" alt="Fireworks" class="fireworks-image">
+                <h1>Congratulations!</h1>
+                <p>It's a fake website.</p>
+                <p class="developer-info">This website is developed by Sonakshi Choudhury for Ayoshi Majumdar.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const signupForm = document.getElementById('signup-form');
+            const signupCard = document.getElementById('signup-card');
+            const scratchCardWrapper = document.getElementById('scratch-card-wrapper');
+            const finalMessageCard = document.getElementById('final-message-card');
+            const winningMessage = document.getElementById('winningMessage');
+            const scratchCanvas = document.getElementById('scratchCanvas');
+            const continueButton = document.getElementById('continue-button');
+            const ctx = scratchCanvas.getContext('2d');
+            const scratchCardContainer = document.querySelector('.scratch-card-container');
+
+            const setCanvasSize = () => {
+                scratchCanvas.width = scratchCardContainer.clientWidth;
+                scratchCanvas.height = scratchCardContainer.clientHeight;
+                initScratchCard();
+            };
+
+            window.addEventListener('resize', setCanvasSize);
+            setCanvasSize();
+
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                
+                signupCard.classList.add('hidden');
+                scratchCardWrapper.classList.remove('hidden');
+                
+                winningMessage.innerHTML = `So lucky, **${username}**, you won an exclusive ticket to the BTS concert!`;
+            });
+
+            continueButton.addEventListener('click', () => {
+                scratchCardWrapper.classList.add('hidden');
+                finalMessageCard.classList.remove('hidden');
+            });
+
+            let isDrawing = false;
+            let scratchCompleted = false;
+            let lastX = 0;
+            let lastY = 0;
+
+            function initScratchCard() {
+                // Fill the canvas with a solid color to be scratched off
+                ctx.fillStyle = "#A020F0"; /* A bright purple color for the scratch-off layer */
+                ctx.fillRect(0, 0, scratchCanvas.width, scratchCanvas.height);
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.strokeStyle = 'rgba(0,0,0,1)';
+                ctx.lineWidth = 60;
+                ctx.lineCap = 'round';
+            }
+
+            function draw(e) {
+                if (!isDrawing || scratchCompleted) return;
+                
+                let rect = scratchCanvas.getBoundingClientRect();
+                let clientX, clientY;
+
+                if (e.touches) {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                } else {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                }
+
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(clientX - rect.left, clientY - rect.top);
+                ctx.stroke();
+                
+                [lastX, lastY] = [clientX - rect.left, clientY - rect.top];
+
+                checkCompletion();
+            }
+
+            function checkCompletion() {
+                if (scratchCompleted) return;
+                
+                const imageData = ctx.getImageData(0, 0, scratchCanvas.width, scratchCanvas.height);
+                const pixels = imageData.data;
+                let transparentPixels = 0;
+
+                for (let i = 0; i < pixels.length; i += 4) {
+                    if (pixels[i + 3] === 0) {
+                        transparentPixels++;
+                    }
+                }
+                const percentage = (transparentPixels / (pixels.length / 4)) * 100;
+                
+                if (percentage > 50) {
+                    ctx.clearRect(0, 0, scratchCanvas.width, scratchCanvas.height);
+                    scratchCompleted = true;
+                    // Show the continue button when scratching is complete
+                    continueButton.classList.remove('hidden');
+                }
+            }
+
+            scratchCanvas.addEventListener('mousedown', (e) => {
+                isDrawing = true;
+                let rect = scratchCanvas.getBoundingClientRect();
+                [lastX, lastY] = [e.clientX - rect.left, e.clientY - rect.top];
+            });
+
+            scratchCanvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                isDrawing = true;
+                let rect = scratchCanvas.getBoundingClientRect();
+                [lastX, lastY] = [e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top];
+            }, { passive: false });
+
+            scratchCanvas.addEventListener('mousemove', draw);
+            scratchCanvas.addEventListener('touchmove', draw, { passive: false });
+            
+            scratchCanvas.addEventListener('mouseup', () => isDrawing = false);
+            scratchCanvas.addEventListener('touchend', () => isDrawing = false);
+            scratchCanvas.addEventListener('mouseout', () => isDrawing = false);
+        });
+    </script>
+</body>
+</html>
